@@ -1,0 +1,44 @@
+﻿<Window x:Class="ProtobufDemo.Ui.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProtobufDemo.Ui"
+        mc:Ignorable="d"
+        Title="ProtobufDemo" Height="600" Width="800">
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" >
+            <TextBlock Text="Adapter:" VerticalAlignment="Center" Margin="5" />
+            <ComboBox ItemsSource="{Binding Adapters}"
+                      SelectedItem="{Binding SelectedAdapter}"
+                      DisplayMemberPath="Description"
+                      Margin="5"
+                      MinWidth="120"/>
+            <Button Content="Fetch Data" Command="{Binding FetchDataCommand}" Margin="5" Padding="5 0"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="1"
+                  ItemsSource="{Binding Result.Data}" />
+
+        <Grid Grid.Row="3">
+            <StackPanel>
+                <TextBlock Text="History:"/>
+                <ListBox ItemsSource="{Binding History}" />
+            </StackPanel>
+        </Grid>
+        
+        <Grid Grid.RowSpan="3" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <TextBlock Text="loading..."  VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Black" Opacity="1.0"/>
+            <Grid Opacity="0.2" Background="Gray"/>
+        </Grid>
+    </Grid>
+</Window>
