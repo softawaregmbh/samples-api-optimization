@@ -20,6 +20,13 @@ namespace ProtobufDemo.Data.EF
             Configuration.LazyLoadingEnabled = false;
         }
 
+        public DemoContext(string connectionString)
+            : base(connectionString)
+        {
+            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             Database.SetInitializer<DemoContext>(null);

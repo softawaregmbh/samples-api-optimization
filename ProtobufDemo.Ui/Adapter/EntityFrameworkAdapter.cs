@@ -1,4 +1,5 @@
 ﻿using ProtobufDemo.Data.EF.Manager;
+using ProtobufDemo.Manager;
 using ProtobufDemo.Model;
 using ProtobufDemo.Ui.Tracing;
 using System;
@@ -12,7 +13,7 @@ namespace ProtobufDemo.Ui.Adapter
 {
     public class EntityFrameworkAdapter : IDataAdapter
     {
-        private OrderManager manager;
+        private IOrderManager manager;
 
         public EntityFrameworkAdapter()
         {
