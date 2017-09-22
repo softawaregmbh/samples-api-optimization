@@ -7,12 +7,13 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProtobufDemo.Manager;
 
 namespace ProtobufDemo.Ui.Adapter
 {
     public class EntityFrameworkAdapter : IDataAdapter
     {
-        private OrderManager manager;
+        private IOrderManager manager;
 
         public EntityFrameworkAdapter()
         {
@@ -30,7 +31,7 @@ namespace ProtobufDemo.Ui.Adapter
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                result.Data = await this.manager.GetOrdersAsync(true);
+                result.Data = await this.manager.GetOrdersAsync(includeProperties: o => o.OrderLines);
                 result.ElapsedMilliseconds = stopWatch.ElapsedMilliseconds;
 
                 stopWatch.Stop();

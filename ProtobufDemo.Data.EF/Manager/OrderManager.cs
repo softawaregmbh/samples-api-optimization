@@ -6,6 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
 
 namespace ProtobufDemo.Data.EF.Manager
 {
@@ -18,14 +19,21 @@ namespace ProtobufDemo.Data.EF.Manager
             this.contextFactory = contextFactory;
         }
 
-        public async Task<IEnumerable<Order>> GetOrdersAsync(bool includeLines = false)
+        public async Task<IEnumerable<Order>> GetOrdersAsync(Expression<Func<Order, bool>> filter, params Expression<Func<Order, object>>[] includeProperties)
         {
             using (var context = this.contextFactory())
             {
                 var query = context.Orders.AsQueryable();
-                if (includeLines)
+                if (filter != null)
                 {
-                    query = query.Include(o => o.OrderLines);
+                    query = query.Where(filter);
+                }
+                if (includeProperties != null)
+                {
+                    foreach (var include in includeProperties)
+                    {
+                        query = query.Include(include);
+                    }
                 }
 
                 return await query.ToListAsync();
