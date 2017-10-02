@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using ProtobufDemo.Data.EF;
 using ProtobufDemo.Manager;
 using ProtobufDemo.Data.EF.Manager;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace ProtobufDemo.Api
 {
@@ -33,6 +34,11 @@ namespace ProtobufDemo.Api
                 .AddScoped(_ => new DemoContext(Configuration.GetConnectionString("EntityFramework")))
                 .AddScoped(_ => new Func<DemoContext>(() => _.GetService<DemoContext>()))
                 .AddScoped<IOrderManager, OrderManager>()
+                .AddResponseCompression(options =>
+                {
+                    options.Providers.Add<GzipCompressionProvider>();
+                    options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/x-protobuf" });
+                })
                 .AddMvc();
         }
 
