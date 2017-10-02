@@ -86,13 +86,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Adapter\AdapterResult.cs" />
+    <Compile Include="Adapter\DataAdapter.cs" />
     <Compile Include="Tracing\TrafficTracer.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Adapter\EntityFrameworkAdapter.cs" />
     <Compile Include="Adapter\IDataAdapter.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

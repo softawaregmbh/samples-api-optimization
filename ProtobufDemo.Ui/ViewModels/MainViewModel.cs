@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProtobufDemo.Data.EF.Manager;
 
 namespace ProtobufDemo.Ui.ViewModels
 {
@@ -60,7 +61,7 @@ namespace ProtobufDemo.Ui.ViewModels
         {
             this.Adapters = new ObservableCollection<IDataAdapter>
             {
-                new EntityFrameworkAdapter()
+                new DataAdapter(new OrderManager(() => new Data.EF.DemoContext()), "direct EntityFramework Connection")
             };
         }
 

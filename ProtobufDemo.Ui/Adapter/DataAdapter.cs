@@ -1,27 +1,23 @@
-﻿using ProtobufDemo.Data.EF.Manager;
+﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using ProtobufDemo.Manager;
 using ProtobufDemo.Model;
 using ProtobufDemo.Ui.Tracing;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProtobufDemo.Manager;
 
 namespace ProtobufDemo.Ui.Adapter
 {
-    public class EntityFrameworkAdapter : IDataAdapter
+    public class DataAdapter : IDataAdapter
     {
         private IOrderManager manager;
 
-        public EntityFrameworkAdapter()
+        public DataAdapter(IOrderManager manager, string description)
         {
-            this.manager = new OrderManager(() => new Data.EF.DemoContext());
+            this.manager = manager;
+            this.Description = description;
         }
 
-        public string Description => "direct EntityFramework Connection";
+        public string Description { get; private set; }
 
         public async Task<AdapterResult<IEnumerable<Order>>> ReadDataAsync()
         {
