@@ -12,6 +12,8 @@ namespace ProtobufDemo.Data.EF
     {
         public IDbSet<Order> Orders { get; set; }
         public IDbSet<OrderLine> OrderLines { get; set; }
+        public IDbSet<Customer> Customers { get; set; }
+        public IDbSet<Person> People { get; set; }
 
         public DemoContext()
             : base("name=EntityFramework")
@@ -32,6 +34,9 @@ namespace ProtobufDemo.Data.EF
             Database.SetInitializer<DemoContext>(null);
             modelBuilder.Entity<Order>().ToTable("Sales.Orders");
             modelBuilder.Entity<OrderLine>().ToTable("Sales.OrderLines");
+            modelBuilder.Entity<Customer>().ToTable("Sales.Customers");
+            modelBuilder.Entity<Person>().ToTable("Application.People");
+                
             base.OnModelCreating(modelBuilder);
         }
     }

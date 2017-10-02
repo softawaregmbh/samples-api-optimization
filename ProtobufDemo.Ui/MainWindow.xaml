@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ProtobufDemo.Ui"
         mc:Ignorable="d"
+        Icon="Icon.png"
         Title="ProtobufDemo" Height="600" Width="800">
     <Window.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
@@ -26,8 +27,26 @@
             <Button Content="Fetch Data" Command="{Binding FetchDataCommand}" Margin="5" Padding="5 0"/>
         </StackPanel>
 
-        <DataGrid Grid.Row="1"
-                  ItemsSource="{Binding Result.Data}" />
+        <DataGrid x:Name="ordersGrid"
+                  Grid.Row="1"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding Result.Data}" 
+                  AutoGenerateColumns="False"
+                  SelectionMode="Single"
+                  SelectionUnit="FullRow">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding OrderId}" />
+                <DataGridTextColumn Header="Customer" Binding="{Binding Customer.CustomerName}" />
+                <DataGridTextColumn Header="SalesPerson" Binding="{Binding Salesperson.FullName}" />
+                <DataGridTextColumn Header="OrderDate" Binding="{Binding OrderDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" />
+                <DataGridTextColumn Header="ExpectedDeliveryDate" Binding="{Binding ExpectedDeliveryDate, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" />
+                <DataGridTextColumn Header="PurchseOrderNumber" Binding="{Binding CustomerPurchaseOrderNumber}" />
+                <DataGridTextColumn Header="DeliveryInstructions" Binding="{Binding DeliveryInstructions}" />
+                <DataGridTextColumn Header="Comments" Binding="{Binding Comments}" />
+                <DataGridTextColumn Header="InternalComments" Binding="{Binding InternalComments}" />
+                <DataGridTextColumn Header="LastEdited" Binding="{Binding LastEditedWhen, StringFormat=\{0:dd.MM.yyyy HH:mm:ss\}}" />
+            </DataGrid.Columns>
+        </DataGrid>
 
         <Grid Grid.Row="3">
             <StackPanel>

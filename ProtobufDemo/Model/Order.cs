@@ -23,6 +23,8 @@ namespace ProtobufDemo.Model
         public int LastEditedBy { get; set; }
         public DateTime LastEditedWhen { get; set; }
 
+        public virtual Customer Customer { get; set; }
+        public virtual Person Salesperson { get; set; }
         public virtual ICollection<OrderLine> OrderLines { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ProtobufDemo.Manager;
 
 namespace ProtobufDemo.Ui.Adapter
 {
@@ -31,7 +32,11 @@ namespace ProtobufDemo.Ui.Adapter
                 var stopWatch = new Stopwatch();
                 stopWatch.Start();
 
-                result.Data = await this.manager.GetOrdersAsync(true);
+                result.Data = await this.manager.GetOrdersAsync(
+                    null,
+                    o => o.OrderLines,
+                    o => o.Customer,
+                    o => o.Salesperson);
                 result.ElapsedMilliseconds = stopWatch.ElapsedMilliseconds;
 
                 stopWatch.Stop();
