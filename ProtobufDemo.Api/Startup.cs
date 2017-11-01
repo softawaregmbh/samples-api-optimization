@@ -11,6 +11,8 @@ using ProtobufDemo.Data.EF;
 using ProtobufDemo.Manager;
 using ProtobufDemo.Data.EF.Manager;
 using Microsoft.AspNetCore.ResponseCompression;
+using WebApiContrib.Core.Formatter.Protobuf;
+using ProtobufDemo.WebUtil;
 
 namespace ProtobufDemo.Api
 {
@@ -30,6 +32,8 @@ namespace ProtobufDemo.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            TypeModelHelper.AddTypeModels(ProtobufOutputFormatter.Model);
+
             services
                 .AddScoped(_ => new DemoContext(Configuration.GetConnectionString("EntityFramework")))
                 .AddScoped(_ => new Func<DemoContext>(() => _.GetService<DemoContext>()))
@@ -39,7 +43,7 @@ namespace ProtobufDemo.Api
                     options.Providers.Add<GzipCompressionProvider>();
                     options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "application/x-protobuf" });
                 })
-                .AddMvc();
+                .AddMvc(options => options.OutputFormatters.Add(new ProtobufOutputFormatter(new ProtobufFormatterOptions())));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
