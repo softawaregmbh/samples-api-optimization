@@ -13,6 +13,8 @@ using Newtonsoft.Json;
 using ProtobufDemo.Manager;
 using ProtobufDemo.Model;
 using Serialize.Linq.Extensions;
+using ProtoBuf.Meta;
+using ProtobufDemo.Data.Api;
 
 namespace ProtobufDemo.Data.API
 {
@@ -21,10 +23,13 @@ namespace ProtobufDemo.Data.API
         private ZipHttpClient client;
         private JsonMediaTypeFormatter requestFormatter;
         private MediaTypeWithQualityHeaderValue mediaTypeJson;
+        private SerializationStrategy serializationStrategy;
+        private RuntimeTypeModel typeModel;
 
-        public ApiOrderManager(string baseUrl)
+        public ApiOrderManager(string baseUrl, SerializationStrategy serializationStrategy)
         {
-            this.client = new ZipHttpClient(baseUrl);
+            this.client = new ZipHttpClient(baseUrl, serializationStrategy);
+            this.serializationStrategy = serializationStrategy;
             this.requestFormatter = new JsonMediaTypeFormatter
             {
                 SerializerSettings = new JsonSerializerSettings
@@ -32,6 +37,9 @@ namespace ProtobufDemo.Data.API
                     TypeNameHandling = TypeNameHandling.All
                 }
             };
+
+            this.typeModel = TypeModel.Create();
+            TypeModelHelper.AddTypeModels(this.typeModel);
 
             this.mediaTypeJson = new MediaTypeWithQualityHeaderValue("application/json");
         }
@@ -53,15 +61,21 @@ namespace ProtobufDemo.Data.API
 
         private async Task<TValue> Deserialize<TValue>(HttpResponseMessage message)
         {
-            try
+            switch (this.serializationStrategy)
             {
-                var stringContent = await message.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<TValue>(stringContent);
+                case SerializationStrategy.JSON:
+                    {
+                        var stringContent = await message.Content.ReadAsStringAsync();
+                        return JsonConvert.DeserializeObject<TValue>(stringContent);
+                    }
+                case SerializationStrategy.ProtoBuf:
+                    {
+                        var streamContent = await message.Content.ReadAsStreamAsync();
+                        return (TValue)typeModel.Deserialize(streamContent, null, typeof(TValue));
+                    }
             }
-            catch (Exception)
-            {
-                return default(TValue);
-            }
+
+            return default(TValue);
         }
     }
 }

@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProtobufDemo.Api", "Protobu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtobufDemo.Data.API", "ProtobufDemo.Data.API\ProtobufDemo.Data.API.csproj", "{66B5884E-5F53-4F7D-8EAF-B32A692C3547}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProtobufDemo.WebUtil", "ProtobufDemo.WebUtil\ProtobufDemo.WebUtil.csproj", "{085C88A7-C224-4757-B143-C0B0C2C9D6C1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,10 +39,6 @@ Global
 		{66B5884E-5F53-4F7D-8EAF-B32A692C3547}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{66B5884E-5F53-4F7D-8EAF-B32A692C3547}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{66B5884E-5F53-4F7D-8EAF-B32A692C3547}.Release|Any CPU.Build.0 = Release|Any CPU
-		{085C88A7-C224-4757-B143-C0B0C2C9D6C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{085C88A7-C224-4757-B143-C0B0C2C9D6C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{085C88A7-C224-4757-B143-C0B0C2C9D6C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{085C88A7-C224-4757-B143-C0B0C2C9D6C1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
