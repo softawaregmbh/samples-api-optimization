@@ -59,9 +59,12 @@ namespace ProtobufDemo.Ui.ViewModels
 
         private void InitAdapters()
         {
+            var baseUrl = "http://*.azurewebsites.net";
             this.Adapters = new ObservableCollection<IDataAdapter>
             {
-                new DataAdapter(new OrderManager(() => new Data.EF.DemoContext()), "direct EntityFramework Connection")
+                new DataAdapter(new OrderManager(() => new Data.EF.DemoContext()), "direct EntityFramework Connection"),
+                new DataAdapter(new Data.API.ApiOrderManager(baseUrl, Data.API.SerializationStrategy.JSON), "REST (JSON)"),
+                new DataAdapter(new Data.API.ApiOrderManager(baseUrl, Data.API.SerializationStrategy.ProtoBuf), "REST (ProtoBuf)"),
             };
         }
 

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProtobufDemo.Data.EF.Manager;
 using ProtobufDemo.Manager;
+using ProtobufDemo.Data.API;
+using ProtobufDemo.Model;
 
 namespace ProtobufDemo.Api.Controllers
 {
@@ -18,11 +20,22 @@ namespace ProtobufDemo.Api.Controllers
             this.manager = manager;
         }
 
-        [HttpGet]
-        public async Task<ActionResult> Get()
+        [HttpPost("filterInclude")]
+        public async Task<IActionResult> FilterIncludeAsync([FromBody] FilterIncludeRequest request)
         {
-            var orders = await this.manager.GetOrdersAsync();
-            return this.Ok(orders);
+            try
+            {
+                var query = request.Filter?.ToBooleanExpression<Order>();
+                var includes = request.IncludeProperties?.Select(en => en.ToExpression<Func<Order, object>>()).ToArray();
+
+                var result = await this.manager.GetOrdersAsync(query, includes);
+                return new ObjectResult(result);
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(500);
+            }
         }
+
     }
 }

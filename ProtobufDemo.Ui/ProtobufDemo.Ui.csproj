@@ -136,6 +136,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ProtobufDemo.Data.API\ProtobufDemo.Data.API.csproj">
+      <Project>{66B5884E-5F53-4F7D-8EAF-B32A692C3547}</Project>
+      <Name>ProtobufDemo.Data.API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ProtobufDemo.Data.EF\ProtobufDemo.Data.EF.csproj">
       <Project>{41e50ee8-d02e-487d-b210-379b915c4762}</Project>
       <Name>ProtobufDemo.Data.EF</Name>
