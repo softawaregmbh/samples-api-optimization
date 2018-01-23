@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProtobufDemo.Data.EF.Manager;
+using System.Configuration;
 
 namespace ProtobufDemo.Ui.ViewModels
 {
@@ -59,7 +60,8 @@ namespace ProtobufDemo.Ui.ViewModels
 
         private void InitAdapters()
         {
-            var baseUrl = "http://*.azurewebsites.net";
+            var baseUrl = ConfigurationManager.AppSettings["ApiBaseUrl"];
+
             this.Adapters = new ObservableCollection<IDataAdapter>
             {
                 new DataAdapter(new OrderManager(() => new Data.EF.DemoContext()), "direct EntityFramework Connection"),

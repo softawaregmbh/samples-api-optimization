@@ -30,9 +30,7 @@ namespace ProtobufDemo.Ui.Adapter
 
                 result.Data = await this.manager.GetOrdersAsync(
                     null,
-                    o => o.OrderLines,
-                    o => o.Customer,
-                    o => o.Salesperson);
+                    o => o.OrderLines);
                 result.ElapsedMilliseconds = stopWatch.ElapsedMilliseconds;
 
                 stopWatch.Stop();
